@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Thrylos | Offer Letter</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    :root {
+      --page-bg: #e5e7eb;
+      --page: #ffffff;
+      --border: #d4d4d8;
+      --border-soft: #e5e7eb;
+      --primary: #1d4ed8;
+      --accent: #0ea5e9;
+      --text-main: #0f172a;
+      --text-muted: #6b7280;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Inter",
+        sans-serif;
+    }
+
+    body {
+      background: var(--page-bg);
+      padding: 20px;
+      display: flex;
+      justify-content: center;
+    }
+
+    .page {
+      position: relative;
+      width: 210mm;
+      min-height: 297mm;
+      background: var(--page);
+      border-radius: 12px;
+      box-shadow: 0 14px 40px rgba(15, 23, 42, 0.16);
+      overflow: hidden;
+      border: 1px solid var(--border-soft);
+      page-break-inside: avoid;
+    }
+
+    .page-inner {
+      position: relative;
+      z-index: 1;
+      padding: 22mm 24mm;
+      display: flex;
+      flex-direction: column;
+      color: var(--text-main);
+    }
+
+    /* Soft logo watermark inside container */
+    .page-inner::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: url("/public/thrylogbg.png") center center no-repeat;
+      background-size: 60%;
+      opacity: 0.05;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* HEADER */
+    .header {
+      display: flex;
+      justify-content: space-between;
+      gap: 18px;
+      align-items: center;
+      margin-bottom: 12mm;
+      position: relative;
+      z-index: 1;
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .logo-img {
+      height: 46px;
+      width: auto;
+      object-fit: contain;
+    }
+
+    .brand-name {
+      font-size: 15px;
+      font-weight: 800;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--text-main);
+    }
+
+    .brand-tagline {
+      font-size: 11px;
+      color: var(--text-muted);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .header-right {
+      text-align: right;
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    .header-right strong {
+      color: var(--text-main);
+    }
+
+    .offer-title {
+      margin-top: 8px;
+      font-size: 18px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      font-weight: 600;
+      color: var(--primary);
+      position: relative;
+      z-index: 1;
+    }
+
+    .offer-subtitle {
+      font-size: 11px;
+      color: var(--text-muted);
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      margin-top: 3px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .divider {
+      margin-top: 8mm;
+      height: 1px;
+      background: linear-gradient(
+        to right,
+        rgba(15, 23, 42, 0.4),
+        rgba(148, 163, 184, 0.15),
+        transparent
+      );
+      position: relative;
+      z-index: 1;
+    }
+
+    /* META BAR */
+    .meta-bar {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 8mm;
+      font-size: 11px;
+      color: var(--text-muted);
+      margin: 8mm 0 6mm;
+      padding: 10px 12px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      background: #f9fafb;
+      box-shadow: 0 6px 16px rgba(15, 23, 42, 0.04);
+      position: relative;
+      z-index: 1;
+    }
+
+    .meta-item-label {
+      font-size: 9px;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      margin-bottom: 2px;
+    }
+
+    .meta-item-value {
+      font-size: 11.5px;
+      color: var(--text-main);
+      font-weight: 600;
+    }
+
+    /* BODY */
+    .body {
+      font-size: 13px;
+      line-height: 1.8;
+      color: #111827;
+      flex: 1;
+      margin-top: 2mm;
+      position: relative;
+      z-index: 1;
+    }
+
+    .body p {
+      margin-bottom: 7px;
+    }
+
+    .body strong {
+      color: var(--primary);
+    }
+
+    .candidate-name {
+      font-weight: 600;
+      margin-bottom: 2px;
+    }
+
+    .address-block {
+      margin-bottom: 10px;
+      font-size: 12.5px;
+    }
+
+    .section-heading {
+      margin-top: 10px;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: var(--text-muted);
+    }
+
+    .summary-list {
+      margin: 4px 0 10px 18px;
+      padding: 0;
+      font-size: 12.5px;
+    }
+
+    .summary-list li {
+      margin-bottom: 3px;
+    }
+
+    /* FOOTER */
+    .footer {
+      margin-top: 16mm;
+      padding-top: 6mm;
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      gap: 14px;
+      font-size: 11.5px;
+      align-items: flex-end;
+      flex-wrap: wrap;
+      position: relative;
+      z-index: 1;
+    }
+
+    .sign-block {
+      min-width: 220px;
+      margin-top: 10mm;
+      position: relative;
+      z-index: 1;
+    }
+
+    .sign-box {
+      height: 46px;
+      border-radius: 8px;
+      border: 1px dashed var(--border);
+      margin-bottom: 6px;
+      background: rgba(249, 250, 251, 0.8);
+    }
+
+    .sign-label {
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-bottom: 2px;
+    }
+
+    .sign-name {
+      font-weight: 600;
+      font-size: 12px;
+    }
+
+    .sign-role {
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    /* PRINT BUTTON */
+    .print-btn {
+      position: fixed;
+      top: 16px;
+      right: 16px;
+      padding: 8px 14px;
+      font-size: 13px;
+      border-radius: 999px;
+      border: 1px solid #d1d5db;
+      background: #111827;
+      color: #f9fafb;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(15, 23, 42, 0.2);
+      z-index: 1000;
+    }
+
+    .print-btn:hover {
+      opacity: 0.9;
+    }
+
+    /* --- PRINT STYLES --- */
+    @page {
+      size: A4;
+      margin: 0; /* we will create our own inner margins with padding + scale */
+    }
+
+    @media print {
+      body {
+        margin: 0;
+        padding: 0;
+        background: #ffffff !important;
+      }
+
+      .print-btn {
+        display: none !important;
+      }
+
+      /* show only the page */
+      body * {
+        visibility: hidden;
+      }
+
+      .page,
+      .page * {
+        visibility: visible;
+      }
+
+      .page {
+        position: absolute;
+        left: 0;
+        top: 0;
+        margin: 0;
+        width: 210mm;
+        height: 297mm;
+        border-radius: 0;
+        box-shadow: none;
+        border: none;
+        overflow: hidden;
+        /* SCALE EVERYTHING TO FIT ON ONE PAGE */
+        transform: scale(0.92);
+        transform-origin: top left;
+      }
+
+      /* adjust inner padding for print so it doesn't touch edges */
+      .page-inner {
+        padding: 16mm 18mm 16mm 18mm;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- PRINT BUTTON -->
+  <button class="print-btn" onclick="window.print()">Print / Save as PDF</button>
+
+  <div class="page">
+    <div class="page-inner">
+      <!-- HEADER -->
+      <header class="header">
+        <div class="header-left">
+          <img src="/public/thrylos.png" alt="Thrylos Logo" class="logo-img" />
+          <div>
+            <div class="brand-name"></div>
+            <div class="brand-tagline"></div>
+          </div>
+        </div>
+        <div class="header-right">
+          <div><strong>Kavya Enterprises</strong></div>
+          <div>thrylosindia@gmail.com</div>
+          <div>New Delhi, India</div>
+          <div style="font-size: 8px; color: var(--text-muted); opacity: 0.08; position: relative; bottom: auto; right: auto; z-index: 1; text-align: right; margin-top: 10px;">15THRY018LOS</div>
+        </div>
+      </header>
+
+      <div style="text-align: center; margin-bottom: px; position: relative; z-index: 1;">
+        <div class="offer-title">Offer of Appointment</div>
+        <div class="offer-subtitle">Official Employment Communication</div>
+      </div>
+
+      <div class="divider"></div>
+
+      <!-- META BAR -->
+      <section class="meta-bar">
+        <div>
+          <div class="meta-item-label">Offer Date</div>
+          <div class="meta-item-value">10 December 2025</div>
+        </div>
+        <div>
+          <div class="meta-item-label">Employee</div>
+          <div class="meta-item-value">Mrinal Prakash</div>
+        </div>
+        <div>
+          <div class="meta-item-label">Position</div>
+          <div class="meta-item-value">Co-Founder & CEO</div>
+        </div>
+        <div>
+          <div class="meta-item-label">Location</div>
+          <div class="meta-item-value">Work From Home</div>
+        </div>
+      </section>
+
+      <!-- BODY -->
+      <main class="body">
+        <div class="address-block">
+          To,<br />
+          <span class="candidate-name">Mrinal Prakash</span><br />
+          New Delhi<br />
+          India
+        </div>
+
+        <p>
+          We are pleased to extend to you an offer to join
+          <strong>Thrylos</strong> as
+          <strong>Co-Founder & CEO</strong>, with your expected start date on
+          <strong>15 December 2025</strong>. In this role, you will contribute
+          to building a stronger and more competitive esports ecosystem with
+          Thrylos.
+        </p>
+
+        <p class="section-heading">Summary of your offer</p>
+        <ul class="summary-list">
+          <li>Engagement: Full-time</li>
+          <li>Reporting: Founder / Core Team</li>
+          <li>Compensation: To be mutually decided</li>
+        </ul>
+
+        <p>
+          Detailed terms and conditions relating to your engagement, including
+          compensation structure, working norms, confidentiality and company
+          policies, will be shared in a separate annexure.
+        </p>
+
+        <p>
+          We request you to confirm your acceptance by replying to this offer
+          and sharing a signed or digitally accepted copy of this letter on or
+          before <strong>15 December 2025</strong>.
+        </p>
+
+        <p>
+          We are excited at the prospect of welcoming you to the Thrylos team
+          and look forward to working together to shape the future of esports.
+        </p>
+
+        <p>Yours sincerely,</p>
+        <p><strong>For Thrylos Powered by Kavya Enterprises</strong></p>
+      </main>
+
+      <div class="sign-block">
+        <div class="image">
+          <img
+            src="/public/mpsign.jpeg"
+            alt="Signature"
+            style="height: 90px; width: auto; object-fit: contain; padding: 2px;"
+          />
+        </div>
+        <div class="sign-label">Authorized Signatory</div>
+        <div class="sign-name">Mrinal Prakash</div>
+        <div class="sign-role">
+          <strong>Co-Founder &amp; CEO , Thrylos </strong>
+        </div>
+      </div>
+
+    <div class="divider"></div>
+
+    <div style="position: relative; text-align: center; width: 100%; padding-top: 12px;">
+      <div style="display: flex; justify-content: center; align-items: center; gap: 8px;">
+        <img
+          src="/public/thrylos.png"
+          alt="Thrylos"
+          style="height: 20px; opacity: 0.3; pointer-events: none;"
+        />
+      </div>
+    <p style="font-size: 12px; color: var(--text-muted); position: relative; z-index: 1;">
+      For any clarification regarding this offer, please contact us at
+      <strong>thrylosindia@gmail.com</strong>.
+    </p>
+    </div>
+    
+    </div>
+  </div>
+
+  <script>
+    // If you ever want auto-print:
+    // window.onload = () => window.print();
+  </script>
+</body>
+</html>
