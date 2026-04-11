@@ -1,4 +1,6 @@
-# Campus Voice
+# Campus Voice 
+
+Project link - https://campus-voicee.netlify.app/
 
 Lightweight, mobile-first social app with real-time chat and stories built with React + TypeScript and Supabase.
 
